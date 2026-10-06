@@ -41,8 +41,6 @@ const Image = ({
         ...style,
       }
     : {
-        width: "100%",
-        height: style?.height || "100%",
         ...(resolvedAspectRatio ? { aspectRatio: resolvedAspectRatio } : {}),
         ...style,
       };
