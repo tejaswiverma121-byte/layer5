@@ -35,15 +35,15 @@ const Image = ({
    */
   const computedWrapperStyle = fitContainer
     ? {
-        width: "100%",
-        height: "100%",
-        ...(resolvedAspectRatio ? { aspectRatio: resolvedAspectRatio } : {}),
-        ...style,
-      }
+      width: "100%",
+      height: "100%",
+      ...(resolvedAspectRatio ? { aspectRatio: resolvedAspectRatio } : {}),
+      ...style,
+    }
     : {
-        ...(resolvedAspectRatio ? { aspectRatio: resolvedAspectRatio } : {}),
-        ...style,
-      };
+      ...(resolvedAspectRatio ? { aspectRatio: resolvedAspectRatio } : {}),
+      ...style,
+    };
 
   const computedImgStyle = {
     objectFit: fitContainer ? "contain" : imgStyle?.objectFit || "cover",
@@ -54,16 +54,18 @@ const Image = ({
 
   if (!childImageSharp && extension === "svg") {
     return (
-      <div className="old-gatsby-image-wrapper" style={computedWrapperStyle}>
+      <div
+        key={publicURL}
+        className="old-gatsby-image-wrapper"
+        style={computedWrapperStyle}
+      >
         <img
-          key={publicURL}
           src={publicURL}
           alt={alt || "Blog image"}
           width={explicitWidth || undefined}
           height={explicitHeight || undefined}
           style={{
-            width: "100%",
-            height: fitContainer ? "100%" : "auto",
+            ...(fitContainer && { width: "100%", height: "100%" }),
             ...computedImgStyle,
           }}
           {...rest}
