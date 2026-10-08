@@ -29,7 +29,7 @@ const getPreferredIcon = (component, isDarkActive, fallbackIcon) => {
     ? component?.colorIcon?.publicURL
     : component?.whiteIcon?.publicURL;
 
-  return primary || alternate || fallbackIcon || "";
+  return primary || fallbackIcon || alternate || "";
 };
 
 const ComponentsGrid = ({ frontmatter }) => {
@@ -75,26 +75,28 @@ const ComponentsGrid = ({ frontmatter }) => {
             };
           }
 
-          if (
-            alternateIcon &&
-            alternateIcon !== primaryIcon &&
-            (await checkImageUrlValidity(alternateIcon))
-          ) {
-            return {
-              ...item,
-              preferredIcon: alternateIcon,
-            };
-          }
-
+          // 1. Fallback to the theme-aware integration icon
           if (
             fallbackIcon &&
             fallbackIcon !== primaryIcon &&
-            fallbackIcon !== alternateIcon &&
             (await checkFallback())
           ) {
             return {
               ...item,
               preferredIcon: fallbackIcon,
+            };
+          }
+
+          // 2. Last resort: opposite-theme component icon
+          if (
+            alternateIcon &&
+            alternateIcon !== primaryIcon &&
+            alternateIcon !== fallbackIcon &&
+            (await checkImageUrlValidity(alternateIcon))
+          ) {
+            return {
+              ...item,
+              preferredIcon: alternateIcon,
             };
           }
 
