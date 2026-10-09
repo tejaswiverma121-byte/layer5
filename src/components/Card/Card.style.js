@@ -64,6 +64,7 @@ export const CardWrapper = styled.div`
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: ${(props) => (props.$listView ? "0.5rem" : "0")};
     flex-shrink: 0;
+    align-self: ${(props) => (props.$listView ? "flex-start" : "auto")};
     ${(props) =>
       props.$listView &&
       `
